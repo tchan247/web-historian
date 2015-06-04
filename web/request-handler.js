@@ -2,6 +2,7 @@ var path = require('path');
 var archive = require('../helpers/archive-helpers');
 // require more modules/folders here!
 var fs = require('fs');
+var httpHelp = require('../web/http-helpers')
 
 exports.handleRequest = function (req, res) {
   // archive.homePage();
@@ -9,17 +10,10 @@ exports.handleRequest = function (req, res) {
     res.writeHead(200);
     // Home Page
     if (req.url === '/') {
-      archive.loadPage(function(html) {
-        res.writeHead(200, {"Content-Type": "text/html"});
-        res.write(html, function(err){
-          res.end()});
-      });
+      httpHelp.serveAssets(res, archive.paths.index);
     // Archive Pages
     } else if (req.url === '/styles.css') {
-      archive.loadCss(function(css) {
-        res.writeHead(200, {"Content-Type": "text/css"});
-        res.end(css);
-      });
+      httpHelp.serveAssets(res, archive.paths.styles);
     } else if (req.url === '/www.google.com') {
       res.write('<div>google</div>')
     } else {

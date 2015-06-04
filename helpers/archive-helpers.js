@@ -13,8 +13,9 @@ exports.paths = {
   'siteAssets' : path.join(__dirname, '../web/public'),
   'archivedSites' : path.join(__dirname, '../archives/sites'),
   'list' : path.join(__dirname, '../archives/sites.txt'),
-  'index': path.join(__dirname, '../archives/sites.txt'),
-  'loading': path.join(__dirname, '../archives/sites.txt')
+  'index': path.join(__dirname, '../web/public/index.html'),
+  'loading': path.join(__dirname, '../web/public/loading.html'),
+  'styles': path.join(__dirname, '../web/public/styles.css')
 };
 
 // Used for stubbing paths for jasmine tests, do not modify
@@ -49,28 +50,3 @@ exports.isURLArchived = function(){
 
 exports.downloadUrls = function(){
 };
-
-exports.loadPage = function(callback) {
-  fs.readFile(__dirname + '/../web/public/index.html', {encoding: 'utf8'}, function (err, html) {
-    if (err) {
-        throw err;
-    }
-    callback(html);
-    // console.log(html);
-    // res.writeHead(200, {"Content-Type": "text/html"});
-    // res.write(callback(html));
-    // res.end();
-  });
-};
-exports.loadCss = function(callback) {
-  fs.readFile(__dirname + '/../web/public/styles.css', {encoding: 'utf8'}, function (err, css) {
-    if (err) {
-        throw err;
-    }
-    callback(css);
-    // console.log(html);
-    // res.writeHead(200, {"Content-Type": "text/html"});
-    // res.write(callback(html));
-    // res.end();
-  });
-}
