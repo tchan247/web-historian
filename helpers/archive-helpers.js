@@ -31,7 +31,7 @@ exports.initialize = function(pathsObj){
 exports.readListOfUrls = function(callback){
   console.log("Running readListOfUrls")
   var body = "";
-  fs.readFile( path.join(__dirname, '../archives/sites.txt'), {encoding: 'utf8'}, function (err, data) {
+  fs.readFile( exports.paths.list, {encoding: 'utf8'}, function (err, data) {
     if (err) throw err;
     body += data;
     var urlArray = body.split('\n');
@@ -40,15 +40,18 @@ exports.readListOfUrls = function(callback){
   });
 };
 
-exports.isUrlInList = function(urlName){
-
-  exports.readListOfUrls(function() {
+exports.isUrlInList = function(urlName, callback){
+  exports.readListOfUrls(function(urlArray) {
+    var truthy = false;
     for (var i = 0; i < urlArray.length; i++) {
       if (urlName === urlArray[i]) {
-        console.log("Heyo!");
+        truthy = true;
+        break;
       }
     }
+  callback(truthy);
   });
+};
 
   // console.log(urlName);
   // console.log("Running isUrlInList");
@@ -64,13 +67,12 @@ exports.isUrlInList = function(urlName){
   //   }
   //   callback(truthy);
   // });
-};
 
 exports.addUrlToList = function(req){
   req.on('data', function(data) {
       var body = "";
       body += data;
-      fs.appendFile( path.join(__dirname, '../archives/sites.txt'), body.split('=')[1] + "\n", function (err) {
+      fs.appendFile( exports.paths.list, body.split('=')[1] + "\n", function (err) {
         if (err) throw err;
         console.log('The "data to append" was appended to file!');
       });

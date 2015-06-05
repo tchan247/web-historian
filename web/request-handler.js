@@ -14,14 +14,16 @@ exports.handleRequest = function (req, res) {
     } else if (req.url === '/styles.css') {
       httpHelp.serveAssets(res, archive.paths.styles, 200);
     // Archive Pages
-    } else if ( archive.isUrlInList(req.url.slice(1))) {
-      httpHelp.serveAssets(res, archive.paths.archivedSites + "/" + req.url, 200);
     } else {
       console.log("Run else");
       console.log(req.url.slice(1));
     }
 
-
+    archive.isUrlInList(req.url.slice(1), function(truthy) {
+      if (truthy) {
+        httpHelp.serveAssets(res, archive.paths.archivedSites + req.url, 200);
+      }
+    });
     // else if (req.url === '/www.google.com') {
     //   res.write('<div>google</div>')
     // } else {

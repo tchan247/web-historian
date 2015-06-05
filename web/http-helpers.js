@@ -13,7 +13,6 @@ exports.headers = headers = {
 exports.serveAssets = function(res, asset, statusCode, callback) {
   // Write some code here that helps serve up your static files!
   // (Static files are things like html (yours or archived from others...), css, or anything that doesn't change often.)
-  console.log("Running serveAssets");
   fs.readFile(asset, {encoding: 'utf8'}, function (err, data) {
     if (err) {
         throw err;
